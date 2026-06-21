@@ -1,0 +1,26 @@
+# ============================================================================
+# EcoTrack AI — Netlify Configuration
+# ============================================================================
+
+[build]
+  # The command to compile the React/Vite/TS application
+  command = "npm run build"
+  
+  # The directory containing the production-ready static assets
+  publish = "dist"
+
+# Custom headers for security and caching performance
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "no-referrer-when-downgrade"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://*; connect-src 'self' https://generativetasks.googleapis.com https://api.gemini.com https://*.googleapis.com;"
+
+# SPA redirects to route all paths to index.html (client-side routing fallback)
+[[redirects]]
+  from = "/*"
+  status = 200
+  to = "/index.html"
