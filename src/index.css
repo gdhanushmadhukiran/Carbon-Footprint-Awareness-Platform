@@ -1,0 +1,302 @@
+@import "tailwindcss";
+
+/* ============================================================================
+   EcoTrack AI — Design System (Tailwind v4 Theme)
+   ============================================================================ */
+
+@theme {
+  /* --- Colors: Sophisticated Environmental Palette --- */
+  --color-forest-950: #050d0a;
+  --color-forest-900: #0a1a14;
+  --color-forest-800: #122a20;
+  --color-forest-700: #1a3a2c;
+  --color-forest-600: #245038;
+  --color-forest-500: #2e6644;
+
+  --color-ocean-600: #0a7c78;
+  --color-ocean-500: #0ea5a0;
+  --color-ocean-400: #2dd4bf;
+  --color-ocean-300: #5eead4;
+  --color-ocean-200: #99f6e4;
+
+  --color-earth-600: #b45309;
+  --color-earth-500: #d97706;
+  --color-earth-400: #f59e0b;
+  --color-earth-300: #fbbf24;
+
+  --color-stone-50: #fafaf9;
+  --color-stone-100: #f5f5f4;
+  --color-stone-200: #e7e5e4;
+  --color-stone-300: #d6d3d1;
+  --color-stone-400: #a8a29e;
+  --color-stone-500: #78716c;
+  --color-stone-600: #57534e;
+
+  --color-eco-red: #ef4444;
+  --color-eco-orange: #f97316;
+  --color-eco-yellow: #eab308;
+  --color-eco-green: #22c55e;
+  --color-eco-blue: #3b82f6;
+
+  /* --- Typography --- */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* --- Animation --- */
+  --animate-fade-in: fade-in 0.4s ease-out;
+  --animate-slide-up: slide-up 0.4s ease-out;
+  --animate-pulse-glow: pulse-glow 2s ease-in-out infinite;
+  --animate-count-up: count-up 0.6s ease-out;
+}
+
+/* ============================================================================
+   Base Styles
+   ============================================================================ */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-forest-950);
+  color: var(--color-stone-100);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* ============================================================================
+   Scrollbar Styling
+   ============================================================================ */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-forest-900);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-forest-600);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-ocean-500);
+}
+
+/* ============================================================================
+   Glassmorphism Utility Classes
+   ============================================================================ */
+
+.glass {
+  background: rgba(18, 42, 32, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(46, 102, 68, 0.3);
+}
+
+.glass-light {
+  background: rgba(18, 42, 32, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(46, 102, 68, 0.2);
+}
+
+.glass-card {
+  background: rgba(18, 42, 32, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(46, 102, 68, 0.35);
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  border-color: rgba(14, 165, 160, 0.4);
+  box-shadow: 0 8px 32px rgba(14, 165, 160, 0.1);
+}
+
+/* ============================================================================
+   Gradient Utilities
+   ============================================================================ */
+
+.gradient-primary {
+  background: linear-gradient(135deg, var(--color-ocean-500), var(--color-ocean-400));
+}
+
+.gradient-warm {
+  background: linear-gradient(135deg, var(--color-earth-500), var(--color-earth-400));
+}
+
+.gradient-success {
+  background: linear-gradient(135deg, var(--color-eco-green), var(--color-ocean-400));
+}
+
+.gradient-danger {
+  background: linear-gradient(135deg, var(--color-eco-red), var(--color-eco-orange));
+}
+
+.gradient-text-primary {
+  background: linear-gradient(135deg, var(--color-ocean-400), var(--color-ocean-300));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-warm {
+  background: linear-gradient(135deg, var(--color-earth-400), var(--color-earth-300));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ============================================================================
+   Rating Badge Colors
+   ============================================================================ */
+
+.rating-A { background: var(--color-eco-green); color: white; }
+.rating-B { background: var(--color-ocean-500); color: white; }
+.rating-C { background: var(--color-eco-yellow); color: var(--color-forest-900); }
+.rating-D { background: var(--color-eco-orange); color: white; }
+.rating-F { background: var(--color-eco-red); color: white; }
+
+/* ============================================================================
+   Keyframe Animations
+   ============================================================================ */
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(14, 165, 160, 0); }
+  50% { box-shadow: 0 0 20px 8px rgba(14, 165, 160, 0.25); }
+}
+
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ============================================================================
+   Reduced Motion
+   ============================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================================================
+   Component Utilities
+   ============================================================================ */
+
+.shimmer-loading {
+  background: linear-gradient(90deg,
+    var(--color-forest-800) 25%,
+    var(--color-forest-700) 50%,
+    var(--color-forest-800) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Slider Styling */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  background: var(--color-forest-600);
+  border-radius: 3px;
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-ocean-500), var(--color-ocean-400));
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(14, 165, 160, 0.4);
+  transition: transform 0.2s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, var(--color-ocean-500), var(--color-ocean-400));
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(14, 165, 160, 0.4);
+}
+
+/* Number Input */
+input[type="number"] {
+  background: var(--color-forest-800);
+  border: 1px solid var(--color-forest-600);
+  border-radius: 8px;
+  color: var(--color-stone-100);
+  padding: 8px 12px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+input[type="number"]:focus {
+  border-color: var(--color-ocean-500);
+}
+
+/* Text Input */
+input[type="text"],
+input[type="email"],
+textarea {
+  background: var(--color-forest-800);
+  border: 1px solid var(--color-forest-600);
+  border-radius: 8px;
+  color: var(--color-stone-100);
+  padding: 10px 14px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease;
+  width: 100%;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+  border-color: var(--color-ocean-500);
+  box-shadow: 0 0 0 2px rgba(14, 165, 160, 0.15);
+}
