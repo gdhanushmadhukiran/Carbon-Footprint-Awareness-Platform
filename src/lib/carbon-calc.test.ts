@@ -16,8 +16,6 @@ import {
   projectAnnualEmissions,
   calculateEcoBaseline,
   getSustainabilityProfile,
-  TRANSPORT_FACTORS,
-  FOOD_FACTORS,
 } from './carbon-calc';
 import type { ActivityLog } from '../types';
 

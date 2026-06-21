@@ -1,8 +1,7 @@
-import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import {
-  AreaChart, Area, BarChart, Bar, RadarChart, Radar, PolarGrid,
-  PolarAngleAxis, ResponsiveContainer, XAxis, YAxis, Tooltip, CartesianGrid, Cell, PieChart, Pie,
+  AreaChart, Area, ResponsiveContainer, XAxis, YAxis, Tooltip, CartesianGrid, Cell, PieChart, Pie,
 } from 'recharts';
 import { useStore } from './store/useStore';
 import {
@@ -10,30 +9,29 @@ import {
   calculateShoppingEmission, calculateWasteEmission, calculateBaselineFootprint,
   calculateCarbonRiskScore, getSustainabilityRating, getCategoryBreakdown,
   projectAnnualEmissions, calculateEcoBaseline, getSustainabilityProfile,
-  REGIONAL_AVERAGES, TRANSPORT_FACTORS,
+  REGIONAL_AVERAGES,
 } from './lib/carbon-calc';
-import { getBestEquivalent, getAllEquivalents, estimateMoneySaved, estimateFuelSaved } from './lib/equivalents';
+import { getBestEquivalent, estimateMoneySaved, estimateFuelSaved } from './lib/equivalents';
 import { generateOnboardingInsights, generateCoachAdvice, generateWeeklyReport, generateChallenge, isAIAvailable } from './lib/ai-client';
 import type {
   Region, DietType, TransportMode, EnergySource, LogCategory,
   ActivityLog, TransportLog, FoodLog, EnergyLog, ShoppingLog, WasteLog,
-  CoachRecommendation, PageName, CarbonTwinState, Goal, Challenge, WeeklyReport,
+  PageName, Goal, WeeklyReport,
 } from './types';
 
 // ============================================================================
 // Animation Variants
 // ============================================================================
-const pageV = {
+const pageV: any = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] } },
   exit: { opacity: 0, y: -10, transition: { duration: 0.2 } },
 };
-const staggerContainer = { initial: {}, animate: { transition: { staggerChildren: 0.06, delayChildren: 0.1 } } };
-const staggerItem = { initial: { opacity: 0, y: 16 }, animate: { opacity: 1, y: 0, transition: { duration: 0.35 } } };
-const cardV = { initial: { opacity: 0, y: 20, scale: 0.97 }, animate: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.35 } } };
-const modalOverlay = { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } };
-const modalContent = { initial: { opacity: 0, scale: 0.92, y: 30 }, animate: { opacity: 1, scale: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 30 } }, exit: { opacity: 0, scale: 0.95, y: 20 } };
-const onboardingStep = { initial: { opacity: 0, x: 80 }, animate: { opacity: 1, x: 0, transition: { duration: 0.45 } }, exit: { opacity: 0, x: -80, transition: { duration: 0.25 } } };
+const staggerContainer: any = { initial: {}, animate: { transition: { staggerChildren: 0.06, delayChildren: 0.1 } } };
+const staggerItem: any = { initial: { opacity: 0, y: 16 }, animate: { opacity: 1, y: 0, transition: { duration: 0.35 } } };
+const modalOverlay: any = { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } };
+const modalContent: any = { initial: { opacity: 0, scale: 0.92, y: 30 }, animate: { opacity: 1, scale: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 30 } }, exit: { opacity: 0, scale: 0.95, y: 20 } };
+const onboardingStep: any = { initial: { opacity: 0, x: 80 }, animate: { opacity: 1, x: 0, transition: { duration: 0.45 } }, exit: { opacity: 0, x: -80, transition: { duration: 0.25 } } };
 
 // ============================================================================
 // Helpers
@@ -59,7 +57,7 @@ const ENERGY_LABELS: Record<EnergySource, string> = { grid_default: 'Grid Defaul
 
 function CountUp({ end, duration = 1000, prefix = '', suffix = '' }: { end: number; duration?: number; prefix?: string; suffix?: string }) {
   const [val, setVal] = useState(0);
-  const ref = useRef<number>();
+  const ref = useRef<number | null>(null);
   useEffect(() => {
     const start = performance.now();
     const animate = (now: number) => {
@@ -266,10 +264,6 @@ function Dashboard() {
     return Math.max(dates.size, 1);
   }, [logs]);
   const annualProjection = useMemo(() => projectAnnualEmissions(logs, daysActive), [logs, daysActive]);
-  const weeklyLogs = useMemo(() => {
-    const weekAgo = Date.now() - 7 * 86400000;
-    return logs.filter(l => new Date(l.timestamp).getTime() > weekAgo);
-  }, [logs]);
 
   const chartData = useMemo(() => {
     const last7 = Array.from({ length: 7 }, (_, i) => {
@@ -341,7 +335,7 @@ function Dashboard() {
                 <Pie data={pieData} cx="50%" cy="50%" innerRadius={50} outerRadius={80} paddingAngle={4} dataKey="value">
                   {pieData.map((entry, i) => <Cell key={i} fill={entry.fill} />)}
                 </Pie>
-                <Tooltip contentStyle={{ background: '#122a20', border: '1px solid #245038', borderRadius: '12px', color: '#f5f5f4' }} formatter={(value: number) => `${value} kg CO₂e`} />
+                <Tooltip contentStyle={{ background: '#122a20', border: '1px solid #245038', borderRadius: '12px', color: '#f5f5f4' }} formatter={(value: any) => `${value} kg CO₂e`} />
               </PieChart>
             </ResponsiveContainer>
           ) : <div className="h-[200px] flex items-center justify-center text-stone-500 text-sm">Log activities to see your breakdown</div>}
@@ -681,7 +675,7 @@ function TwinPage() {
     const goalAnnual = currentAnnual * 0.7; // 30% reduction goal
 
     const generateMonthly = (annual: number) =>
-      Array.from({ length: 12 }, (_, i) => Math.round((annual / 12) * (0.8 + Math.random() * 0.4)));
+      Array.from({ length: 12 }, () => Math.round((annual / 12) * (0.8 + Math.random() * 0.4)));
 
     setCarbonTwin({
       currentMe: currentAnnual, futureMe: Math.round(futureAnnual),
@@ -866,7 +860,7 @@ function SimulatorPage() {
 // GOALS & GAMIFICATION
 // ============================================================================
 function GoalsPage() {
-  const { goals, addGoal, updateGoal, achievements, streak, logs, challenges, addChallenge, updateChallenge, userProfile, setIsLoading, isLoading } = useStore();
+  const { goals, addGoal, achievements, streak, logs, challenges, addChallenge, updateChallenge, userProfile, setIsLoading, isLoading } = useStore();
   const [showGoalForm, setShowGoalForm] = useState(false);
   const [goalTarget, setGoalTarget] = useState(20);
   const [goalTitle, setGoalTitle] = useState('Reduce my carbon footprint');
@@ -1139,7 +1133,7 @@ function SettingsPage() {
 // MAIN APP
 // ============================================================================
 export default function App() {
-  const { isOnboarding, currentPage, setCurrentPage, showLogModal } = useStore();
+  const { isOnboarding, currentPage, setCurrentPage } = useStore();
   const shouldReduceMotion = useReducedMotion();
 
   const renderPage = () => {

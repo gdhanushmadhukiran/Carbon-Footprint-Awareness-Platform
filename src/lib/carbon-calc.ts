@@ -21,7 +21,6 @@ import type {
   Region,
   LogCategory,
   SustainabilityRating,
-  UserProfile,
   ActivityLog,
 } from '../types';
 

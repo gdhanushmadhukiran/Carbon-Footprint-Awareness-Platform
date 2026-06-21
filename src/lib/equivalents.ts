@@ -57,17 +57,10 @@ const KG_PER_KETTLE_BOIL = 0.042;
 const KG_PER_PLASTIC_BAG = 0.033;
 
 /**
- * Balloons of CO₂ (a party balloon ≈ 14 liters; at STP, CO₂ density ≈ 1.98 g/L → ~0.028 kg).
- */
-const KG_PER_BALLOON = 0.028;
-
-/**
  * Get the single best relatable comparison for a given CO₂ amount.
  */
 export function getBestEquivalent(carbonKg: number): string {
   const abs = Math.abs(carbonKg);
-  const saved = carbonKg < 0;
-  const verb = saved ? 'saved' : 'emitted';
 
   if (abs < 0.01) {
     return 'Negligible carbon impact';
